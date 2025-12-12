@@ -262,70 +262,81 @@ export function MediaUpload({
               onDragEnd={handleDragEnd}
               onDragOver={(e) => handleImageDragOver(e, index)}
               className={`
-                p-4 flex items-center gap-4 cursor-move transition-opacity
+                p-4 cursor-move transition-opacity
                 ${draggedIndex === index ? "opacity-50" : "opacity-100"}
               `}
               data-testid={`card-image-${image.id}`}
             >
-              <div className="flex items-center gap-3 shrink-0">
-                <GripVertical 
-                  className="w-5 h-5 text-muted-foreground" 
-                  data-testid={`icon-drag-handle-${image.id}`}
-                />
-                <span className="text-sm text-primary font-medium w-4 text-center">
-                  {index + 1}
-                </span>
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 shrink-0">
+                  <GripVertical 
+                    className="w-5 h-5 text-muted-foreground" 
+                    data-testid={`icon-drag-handle-${image.id}`}
+                  />
+                  <span className="text-sm text-primary font-medium w-4 text-center">
+                    {index + 1}
+                  </span>
+                </div>
+
+                <div className="w-24 h-16 sm:w-20 sm:h-14 rounded-md overflow-hidden shrink-0 border-2 border-primary">
+                  <img
+                    src={image.preview}
+                    alt={image.name}
+                    className="w-full h-full object-cover"
+                    data-testid={`img-preview-${image.id}`}
+                  />
+                </div>
+
+                <div className="flex-1 min-w-0 hidden sm:block">
+                  <p className="text-sm font-medium text-foreground truncate" data-testid={`text-filename-${image.id}`}>
+                    {image.name}
+                  </p>
+                  <p className="text-xs text-muted-foreground whitespace-nowrap" data-testid={`text-image-count-${image.id}`}>
+                    Image {index + 1} of {images.length}
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0 ml-auto">
+                  {coverId === image.id ? (
+                    <Button
+                      variant="default"
+                      size="sm"
+                      className="gap-1.5"
+                      data-testid={`button-cover-${image.id}`}
+                    >
+                      <Star className="w-4 h-4" />
+                      <span className="hidden xs:inline">Cover</span>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => handleSetCover(image.id)}
+                      className="gap-1.5"
+                      data-testid={`button-set-cover-${image.id}`}
+                    >
+                      <Star className="w-4 h-4" />
+                      <span className="hidden sm:inline">Set as Cover</span>
+                    </Button>
+                  )}
+
+                  <button
+                    onClick={() => handleDeleteImage(image.id)}
+                    className="text-destructive hover:text-destructive/80 transition-colors p-1"
+                    data-testid={`button-delete-${image.id}`}
+                  >
+                    <Trash2 className="w-5 h-5" />
+                  </button>
+                </div>
               </div>
 
-              <div className="w-20 h-14 rounded-md overflow-hidden shrink-0 border border-primary">
-                <img
-                  src={image.preview}
-                  alt={image.name}
-                  className="w-full h-full object-cover"
-                  data-testid={`img-preview-${image.id}`}
-                />
-              </div>
-
-              <div className="flex-1 min-w-0">
-                <p className="text-sm font-medium text-foreground truncate" data-testid={`text-filename-${image.id}`}>
+              <div className="mt-2 pl-11 sm:hidden">
+                <p className="text-sm font-medium text-foreground truncate" data-testid={`text-filename-mobile-${image.id}`}>
                   {image.name}
                 </p>
-                <p className="text-xs text-muted-foreground" data-testid={`text-image-count-${image.id}`}>
+                <p className="text-xs text-muted-foreground" data-testid={`text-image-count-mobile-${image.id}`}>
                   Image {index + 1} of {images.length}
                 </p>
-              </div>
-
-              <div className="flex items-center gap-3 shrink-0">
-                {coverId === image.id ? (
-                  <Button
-                    variant="default"
-                    size="sm"
-                    className="gap-1.5"
-                    data-testid={`button-cover-${image.id}`}
-                  >
-                    <Star className="w-4 h-4" />
-                    Cover
-                  </Button>
-                ) : (
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => handleSetCover(image.id)}
-                    className="gap-1.5"
-                    data-testid={`button-set-cover-${image.id}`}
-                  >
-                    <Star className="w-4 h-4" />
-                    Set as Cover
-                  </Button>
-                )}
-
-                <button
-                  onClick={() => handleDeleteImage(image.id)}
-                  className="text-destructive hover:text-destructive/80 transition-colors p-1"
-                  data-testid={`button-delete-${image.id}`}
-                >
-                  <Trash2 className="w-5 h-5" />
-                </button>
               </div>
             </Card>
           ))}
