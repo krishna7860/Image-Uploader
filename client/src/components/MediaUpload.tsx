@@ -134,6 +134,16 @@ export function MediaUpload({
 
   const handleSetCover = (id: string) => {
     setCoverId(id);
+    setImages((prev) => {
+      const imageIndex = prev.findIndex((img) => img.id === id);
+      if (imageIndex > 0) {
+        const updated = [...prev];
+        const [coverImage] = updated.splice(imageIndex, 1);
+        updated.unshift(coverImage);
+        return updated;
+      }
+      return prev;
+    });
   };
 
   const handleDragStart = (index: number) => {
