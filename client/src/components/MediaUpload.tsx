@@ -300,12 +300,11 @@ export function MediaUpload({
                   {coverId === image.id ? (
                     <Button
                       variant="default"
-                      size="sm"
-                      className="gap-1.5"
+                      size="icon"
+                      className="sm:px-3 sm:w-auto"
                       data-testid={`button-cover-${image.id}`}
                     >
                       <Star className="w-4 h-4" />
-                      <span className="hidden xs:inline">Cover</span>
                     </Button>
                   ) : (
                     <Button
